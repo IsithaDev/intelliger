@@ -1,4 +1,5 @@
 import { Document, model, Model, Schema } from "mongoose";
+import validator from "validator";
 
 interface IUser extends Document {
   _id: string;
@@ -23,10 +24,12 @@ const userSchema = new Schema<IUser, IUserMethods, IUserModel>(
     firstName: {
       type: String,
       required: true,
+      maxlength: 12,
     },
     lastName: {
       type: String,
       required: true,
+      maxlength: 12,
     },
     gender: {
       type: String,
@@ -49,22 +52,15 @@ const userSchema = new Schema<IUser, IUserMethods, IUserModel>(
     email: {
       type: String,
       required: true,
-      validate: {
-        validator(value) {
-          return value;
-        },
-        message: "Valid email is required",
-      },
+      validate: [validator.isEmail, "Valid email is required"],
     },
     password: {
       type: String,
       required: true,
-      validate: {
-        validator(value) {
-          return value;
-        },
-        message: "",
-      },
+      match: [
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character",
+      ],
       select: false,
     },
     passwordConfirm: {
@@ -72,9 +68,9 @@ const userSchema = new Schema<IUser, IUserMethods, IUserModel>(
       required: true,
       validate: {
         validator(value) {
-          return value;
+          return value === this.password;
         },
-        message: "",
+        message: "Passwords do not match.",
       },
       select: false,
     },
