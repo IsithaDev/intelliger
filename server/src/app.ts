@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import postRoutes from "./routes/postRoutes";
+import savedPostRoutes from "./routes/savedPostRoutes";
 import globalErrorHandler from "./controllers/errorController";
 import AppError from "./utils/appError";
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/posts", postRoutes);
+app.use("/api/v1/savedPosts", savedPostRoutes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
   return next(
