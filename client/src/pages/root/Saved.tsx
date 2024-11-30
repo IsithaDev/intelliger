@@ -1,5 +1,5 @@
 const Saved = () => {
-  return <div>Saved</div>;
+  return <main>Saved</main>;
 };
 
 export default Saved;

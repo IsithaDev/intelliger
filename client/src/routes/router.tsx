@@ -6,7 +6,7 @@ import {
 
 import App from "@/App";
 import { Login, Register } from "@/pages/auth";
-import { RootLayout } from "@/layouts";
+import { CommonPageLayout, RootLayout } from "@/layouts";
 import { Explore, Home, Profile, Saved } from "@/pages/root";
 import { Dashboard, Users } from "@/pages/dashboard";
 
@@ -17,8 +17,10 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
 
       <Route element={<RootLayout />}>
-        <Route index element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
+        <Route element={<CommonPageLayout />}>
+          <Route index element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+        </Route>
         <Route path="/saved" element={<Saved />} />
         <Route path="/profile" element={<Profile />} />
 
